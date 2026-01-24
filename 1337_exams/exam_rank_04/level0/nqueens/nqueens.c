@@ -3,13 +3,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-int is_safe(int level, int *buffer, int index, int number_of_queens)
+int is_safe(int level, int *buffer, int index)
 {
     int i = 0;
-    // printf ("level %d - index : %d\n", level, index);
     while (i < level)
     {
-        // printf ("%d == %d\n", buffer[i], i);
         if (buffer[i] == index)
         {
             return (0);
@@ -35,7 +33,7 @@ void nqueens(int level, int *buffer, int number_of_queens)
     int i = 0;
     while (i < number_of_queens)
     {
-        if (!is_safe(level, buffer, i, number_of_queens))
+        if (!is_safe(level, buffer, i))
         {
             i++;
             continue;
@@ -53,7 +51,7 @@ int main (int ac, char **av)
         return (1);
     }
     int number_of_queens = atoi(av[1]);
-    int buffer[number_of_queens];
+    int buffer[number_of_queens + 1];
     buffer[number_of_queens] = 0;
     nqueens(0, buffer, number_of_queens);
 }

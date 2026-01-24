@@ -30,7 +30,6 @@ void rip(int level, char *str, int c)
         puts(str);
         return ;
     }
-    int i = level;
     while (str[level])
     {
         if (str[level] == '(' || str[level] == ')')

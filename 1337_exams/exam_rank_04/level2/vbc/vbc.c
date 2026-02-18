@@ -14,7 +14,6 @@ void error_exit(char c, int type) {
 }
 
 int P();
-// int M();
 
 int X() {
     char c = *line;

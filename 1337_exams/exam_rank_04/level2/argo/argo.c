@@ -33,14 +33,6 @@ typedef struct pair
 	json				value;
 }						pair;
 
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++  add
-int						argo(json *dst, FILE *stream);
-int						parser(json *dst, FILE *stream);
-int						parse_int(json *dst, FILE *stream);
-int						parse_string(json *dst, FILE *stream);
-int						parse_map(json *dst, FILE *stream);
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
 void					free_json(json j);
 int						argo(json *dst, FILE *stream);
 
@@ -131,24 +123,6 @@ void	serialize(json j)
 	}
 }
 
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++  add these  5 functions:
-int	parser(json *dst, FILE *stream)
-{
-	int	c;
-
-	c = peek(stream);
-	if (c == '"')
-		return (parse_string(dst, stream));
-	else if (isdigit(c) || c == '-')
-		return (parse_int(dst, stream));
-	else if (c == '{')
-		return (parse_map(dst, stream));
-	else
-	{
-		unexpected(stream);
-		return (-1);
-	}
-}
 
 int	parse_int(json *dst, FILE *stream)
 {
@@ -245,11 +219,28 @@ int	parse_map(json *dst, FILE *stream)
 	return (1);
 }
 
+int	parser(json *dst, FILE *stream)
+{
+	int	c;
+
+	c = peek(stream);
+	if (c == '"')
+		return (parse_string(dst, stream));
+	else if (isdigit(c) || c == '-')
+		return (parse_int(dst, stream));
+	else if (c == '{')
+		return (parse_map(dst, stream));
+	else
+	{
+		unexpected(stream);
+		return (-1);
+	}
+}
+
 int	argo(json *dst, FILE *stream)
 {
 	return (parser(dst, stream));
 }
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 int	main(int argc, char **argv)
 {
